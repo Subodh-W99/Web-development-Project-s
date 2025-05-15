@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Temperature Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            transition: background-color 0.5s ease;
+        }
+        .converter {
+            background-color: #ffffffaa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 300px;
+            transition: background-color 0.5s ease;
+        }
+        input, select, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="converter" id="converterBox">
+        <h2><ins>Temperature Converter</ins></h2>
+        <input type="number" id="tempInput" placeholder="Enter Temperature">
+        <select id="unit">
+            <option value="C">Celsius</option>
+            <option value="F">Fahrenheit</option>
+        </select>
+        <button onclick="convertTemperature()">Convert</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function convertTemperature() {
+            const input = document.getElementById('tempInput').value;
+            const unit = document.getElementById('unit').value;
+            const resultDiv = document.getElementById('result');
+            const body = document.body;
+            const box = document.getElementById('converterBox');
+
+            if (input === '' || isNaN(input)) {
+                resultDiv.innerText = 'Please enter a valid number.';
+                return;
+            }
+
+            const value = parseFloat(input);
+            let celsius, fahrenheit;
+
+            if (unit === 'C') {
+                celsius = value;
+                fahrenheit = (value * 9 / 5) + 32;
+            } else if (unit === 'F') {
+                celsius = (value - 32) * 5 / 9;
+                fahrenheit = value;
+            }
+
+           
+            if (celsius <= 0) {
+                body.style.backgroundColor = '#b3e5fc';
+                box.style.backgroundColor = '#81d4fa';
+            } else if (celsius <= 20) {
+                body.style.backgroundColor = '#4fc3f7'; 
+                box.style.backgroundColor = '#29b6f6';
+            } else if (celsius <= 30) {
+                body.style.backgroundColor = '#ffab91';
+                box.style.backgroundColor = '#ff8a65';
+            } else {
+                body.style.backgroundColor = '#ff7043'; 
+                box.style.backgroundColor = '#f4511e';
+            }
+
+            resultDiv.innerHTML = `
+                <strong>Converted Temperatures:</strong><br>
+                Celsius: ${celsius.toFixed(2)} °C<br>
+                Fahrenheit: ${fahrenheit.toFixed(2)} °F
+            `;
+        }
+    </script>
+</body>
+</html>
+
+
+
